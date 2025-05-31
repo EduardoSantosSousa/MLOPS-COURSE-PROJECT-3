@@ -21,7 +21,7 @@ Predict whether a passenger survived the Titanic disaster based on features like
 ---
 
 ## 📁 Project Structure
-```mermaid
+```
 MLOPS_PROJECT_THREE/
 │
 ├── airflow/ # Airflow DAGs for ETL Pipeline
@@ -63,7 +63,7 @@ MLOPS_PROJECT_THREE/
 
 ## 🔄 End-to-End Workflow
 
-```mermaid
+```
 graph TD
     A[Project Setup] --> B[ETL Pipeline using Airflow]
     B --> C[Data Ingestion]
@@ -105,7 +105,7 @@ Prometheus & Grafana to track API performance, CPU usage, and other system metri
 
 ## 🚀 How to Run Locally:
 
-```mermaid
+```
 # Clone the repository
 git clone https://github.com/your_username/titanic-mlops.git
 cd titanic-mlops

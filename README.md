@@ -1,45 +1,134 @@
-Overview
-========
+# 🚢 Titanic Survival Prediction - MLOps Project
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+This project demonstrates a full **MLOps pipeline** for predicting Titanic survival outcomes using a structured ML system. The pipeline includes data engineering, feature storing, model training, versioning, drift detection, and deployment with monitoring.
 
-Project Contents
-================
+## 🔍 Project Highlights
 
-Your Astro project contains the following files and folders:
+- ✅ **ETL Pipeline using Apache Airflow**
+- ✅ **Feature Store implementation with Redis**
+- ✅ **Model training pipeline and code versioning**
+- ✅ **Drift Detection using Alibi Detect**
+- ✅ **ML Monitoring with Prometheus & Grafana**
+- ✅ **Web UI (Flask) for prediction**
+- ✅ **Fully Modular and Reproducible Setup**
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+---
 
-Deploy Your Project Locally
-===========================
+## 🧠 Problem Statement
 
-Start Airflow on your local machine by running 'astro dev start'.
+Predict whether a passenger survived the Titanic disaster based on features like age, fare, class, sex, and other relevant attributes.
 
-This command will spin up five Docker containers on your machine, each for a different Airflow component:
+---
 
-- Postgres: Airflow's Metadata Database
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- DAG Processor: The Airflow component responsible for parsing DAGs
-- API Server: The Airflow component responsible for serving the Airflow UI and API
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+## 📁 Project Structure
+```mermaid
+MLOPS_PROJECT_THREE/
+│
+├── airflow/ # Airflow DAGs for ETL Pipeline
+├── artifacts/ # Stored artifacts
+├── config/ # Configuration files
+├── data/ # Titanic raw CSV files
+├── logs/ # Log files
+├── notebook/ # Jupyter notebooks
+├── pipeline/ # Training pipeline orchestration
+├── src/ # Source code (training, processing, utils)
+│ ├── data_ingestion.py
+│ ├── data_processing.py
+│ ├── model_training.py
+│ ├── feature_store.py
+│ └── ...
+├── static/ # Flask static assets (CSS, JS)
+├── templates/ # Flask HTML template
+├── app.py # Flask app for UI
+├── Dockerfile # Docker container definition
+├── docker-compose.yml # Multi-service orchestration
+├── requirements.txt # Python dependencies
+└── README.md # Project documentation 
+```
 
-When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
+---
 
-Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
+## 🔧 Tech Stack
 
-Deploy Your Project to Astronomer
-=================================
+- **Python**
+- **Apache Airflow**
+- **Redis (Feature Store)**
+- **Scikit-learn**
+- **Flask**
+- **Docker & Docker Compose**
+- **Prometheus + Grafana (Monitoring)**
+- **EvidentlyAI (Data Drift Detection)**
 
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
+---
 
-Contact
-=======
+## 🔄 End-to-End Workflow
 
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+```mermaid
+graph TD
+    A[Project Setup] --> B[ETL Pipeline using Airflow]
+    B --> C[Data Ingestion]
+    C --> D[Feature Store Setup using Redis]
+    D --> E[Data Processing with Feature Storing]
+    E --> F[Model Training with Feature Extraction]
+    F --> G[Training Pipeline]
+    G --> H[Data and Code Versioning (GitHub)]
+    F --> I[Jupyter Notebook Testing]
+    E --> J[Data Drift Detection (EvidentlyAI)]
+    J --> K[ML Monitoring (Prometheus + Grafana)]
+    G --> L[User App Building (Flask, HTML)]
+    L --> M[Done ✅]
+
+```
+
+## 🧪 Model Training
+Model training is implemented using Scikit-learn with preprocessing pipelines that include:
+
+- Feature Engineering (Family Size, Title, Age*Fare)
+
+- Missing Value Imputation
+
+- Scaling and Encoding
+
+## 💻 Web Interface
+Users can input data to predict Titanic survival via a clean and simple Flask-based UI:
+
+Fields include: `Age`, `Fare`, `Pclass`, `Sex` , `Embarked`, `Family Size`, `Is Alone`, `Has Cabin Title`, `Pclass Fare`, `Age Fare`
+
+![alt text](image.png)
+
+## 📊 ML Monitoring
+ML model and data drift is monitored using:
+
+Alibi Detect for detecting changes in data distribution
+
+Prometheus & Grafana to track API performance, CPU usage, and other system metrics.
+
+## 🚀 How to Run Locally:
+
+```mermaid
+# Clone the repository
+git clone https://github.com/your_username/titanic-mlops.git
+cd titanic-mlops
+
+# Start Airflow, Redis, and Flask via Docker Compose
+docker-compose up --build
+
+# Visit Flask App at:
+http://localhost:5000
+```
+## 🛠️ Future Improvements
+
+- Add CI/CD pipeline with GitHub Actions
+
+- Use MLflow for experiment tracking
+
+- Add advanced data versioning with DVC
+
+- Deploy as a REST API with FastAPI
+
+## 🤝 Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## 👨‍💻 Author  
+Developed by Eduardo dos Santos Sousa.  
+Feel free to contribute, report issues, or suggest improvements.
